@@ -1,26 +1,84 @@
 @import "tailwindcss";
 
+@theme {
+  --font-body: "Inter", sans-serif;
+  --font-heading: "Space Grotesk", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --color-ink: #181c24;
+  --color-steel: #7c9cc0;
+  --color-powder: #b7d3e0;
+  --color-cream: #f3e3d3;
+  --color-sand: #cbbba3;
+  --color-paper: #fbf7f1;
+  --color-mist: #f8f8f6;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #181c24;
+  --steel: #7c9cc0;
+  --powder: #b7d3e0;
+  --cream: #f3e3d3;
+  --sand: #cbbba3;
+  --paper: #fbf7f1;
+  --mist: #f8f8f6;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--steel);
+  color: var(--paper);
+}
+
+/* thin scroll */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--sand);
+  border-radius: 4px;
+}
+
+.eyebrow {
+  font-family: "JetBrains Mono", monospace;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.text-outline {
+  -webkit-text-stroke: 1.5px var(--ink);
+  color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--steel);
+  outline-offset: 3px;
 }
