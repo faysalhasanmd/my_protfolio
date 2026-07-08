@@ -7,9 +7,12 @@ const links = [
   { href: "#top", label: "Home" },
   { href: "#skills", label: "Skills" },
   { href: "#work", label: "Work" },
-  { href: "#path", label: "Path" },
+  { href: "#path", label: "Education" },
   { href: "#contact", label: "Contact" },
 ];
+
+const RESUME_URL =
+  "https://drive.google.com/file/d/1Wk4ylpT7OmrMb0M6PGKH6gz-1uZvbsgw/view?usp=sharing";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
@@ -94,8 +97,9 @@ export default function Nav() {
 
         <div className="flex items-center gap-3">
           <a
-            href="/Md_Faysal_Hasan_CV.pdf"
-            download
+            href={RESUME_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="eyebrow hidden sm:inline-block text-paper border border-paper/40 rounded-full px-4 py-2 hover:bg-paper hover:text-ink transition-colors focus-ring"
           >
             Résumé
@@ -178,8 +182,9 @@ export default function Nav() {
               </div>
 
               <a
-                href="/Md_Faysal_Hasan_CV.pdf"
-                download
+                href={RESUME_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="eyebrow text-center text-paper border border-paper/40 rounded-full px-4 py-3 hover:bg-paper hover:text-ink transition-colors focus-ring"
               >
                 Résumé
