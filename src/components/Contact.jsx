@@ -12,14 +12,20 @@ import {
   CheckCircle2,
   AlertCircle,
 } from "lucide-react";
+import dynamic from "next/dynamic";
 import { profile } from "@/lib/data";
+
+// কন্টাক্ট সেকশনের জন্য আলাদা একটি ৩ডি ব্যাকগ্রাউন্ড সিন ডাইনামিকালি লোড করা হলো
+const ContactSignalScene = dynamic(() => import("./ContactSignalScene"), {
+  ssr: false,
+});
 
 /**
  * Wire this up to Formspree (free, no backend needed) so submissions
  * land straight in your inbox:
- *   1. Create a free form at https://formspree.io
- *   2. Point it at your inbox email (e.g. faysalhasanmd393@gmail.com)
- *   3. Paste the endpoint they give you below.
+ * 1. Create a free form at https://formspree.io
+ * 2. Point it at your inbox email (e.g. faysalhasanmd393@gmail.com)
+ * 3. Paste the endpoint they give you below.
  */
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/mvzjndqg";
 
@@ -97,12 +103,17 @@ export default function Contact() {
   return (
     <section
       id="contact"
-      className="relative bg-paper px-6 md:px-10 py-28 md:py-40 overflow-hidden"
+      className="relative bg-paper px-6 md:px-10 py-16 md:py-20 overflow-hidden"
     >
-      {/* ambient signature glow, echoes the "signal" idea of getting in touch */}
-      <div className="pointer-events-none absolute top-24 right-0 w-[420px] h-[420px] rounded-full bg-steel/10 blur-[120px]" />
+      {/* 3D Interactive Context Backdrop */}
+      <div className="absolute inset-0 z-0">
+        <ContactSignalScene className="w-full h-full opacity-35" />
+      </div>
 
-      <div className="relative max-w-6xl mx-auto">
+      {/* Ambient signature glow overlay */}
+      <div className="pointer-events-none absolute top-24 right-0 w-[420px] h-[420px] rounded-full bg-steel/10 blur-[120px] z-0" />
+
+      <div className="relative max-w-6xl mx-auto z-10">
         <motion.p
           variants={fadeUp}
           initial="hidden"
@@ -122,9 +133,8 @@ export default function Contact() {
           viewport={{ once: true, amount: 0.4 }}
           className="font-display font-semibold text-[9vw] md:text-[4.4vw] leading-[0.95] mb-16"
         >
-          Let&apos;s build something
-          <br />
-          <span className="text-steel">worth shipping.</span>
+          Let&apos;s,
+          <span className="text-steel">get in touch.</span>
         </motion.h2>
 
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-start">
@@ -155,7 +165,7 @@ export default function Contact() {
             <div className="space-y-4">
               {infoCards.map(({ label, value, href, Icon }) => {
                 const content = (
-                  <div className="group flex items-center gap-4 rounded-2xl border border-sand/60 bg-ink/[0.02] px-5 py-4 transition-colors hover:border-steel/50 hover:bg-steel/5">
+                  <div className="group flex items-center gap-4 rounded-2xl border border-sand/60 bg-paper/70 backdrop-blur-md px-5 py-4 transition-colors hover:border-steel/50 hover:bg-steel/5">
                     <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-ink/5 text-steel group-hover:bg-steel/10 transition-colors shrink-0">
                       <Icon size={18} />
                     </div>
@@ -187,7 +197,7 @@ export default function Contact() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
-            className="rounded-3xl border border-sand/60 bg-ink/[0.02] p-6 md:p-8"
+            className="rounded-3xl border border-sand/60 bg-paper/80 backdrop-blur-md p-6 md:p-8 shadow-sm"
           >
             <h3 className="font-display font-semibold text-2xl mb-6">
               Send a Message
@@ -304,7 +314,7 @@ export default function Contact() {
         </div>
       </div>
 
-      <footer className="max-w-6xl mx-auto mt-24 pt-6 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-ink/40 border-t border-sand/50">
+      <footer className="max-w-6xl mx-auto mt-24 pt-6 flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-ink/40 border-t border-sand/50 relative z-10">
         <span>
           © {new Date().getFullYear()} {profile.name}
         </span>

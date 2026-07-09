@@ -22,6 +22,15 @@ const PALETTE = {
   line: "#CDBEA7",
 };
 
+// meta স্ট্রিং থেকে GPA/CGPA সংক্রান্ত অংশ বাদ দেয় (ডেটা ফাইল না ছুঁয়েই)
+function stripGpa(meta = "") {
+  return meta
+    .split("·")
+    .map((s) => s.trim())
+    .filter((s) => !/\b(c?gpa)\b/i.test(s))
+    .join(" · ");
+}
+
 export default function Timeline() {
   // ডালাকে Education এবং Certification ক্যাটাগরিতে আলাদা করা হয়েছে
   const educationItems = timeline.filter((item) => item.type === "education");
@@ -41,10 +50,63 @@ export default function Timeline() {
     },
   };
 
+  const renderItem = (t) => {
+    const cleanMeta = stripGpa(t.meta);
+    return (
+      <motion.li
+        key={t.title + t.year}
+        variants={itemVariants}
+        className="group relative pl-5 border-l-2 transition-colors duration-300"
+        style={{ borderColor: `${PALETTE.line}55` }}
+        whileHover={{ borderColor: PALETTE.accent }}
+      >
+        {/* Timeline Node Bullet point effect on hover */}
+        <div
+          className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full border bg-white transition-transform duration-300 group-hover:scale-150"
+          style={{
+            borderColor: PALETTE.accent,
+            backgroundColor: PALETTE.bg,
+          }}
+        />
+        <div className="flex items-baseline gap-3 mb-1">
+          <span
+            className="font-mono text-xs font-bold"
+            style={{ color: PALETTE.accent }}
+          >
+            {t.year}
+          </span>
+          {/* নতুন: টাইপ ব্যাজ (GPA-এর জায়গায় ছোট একটা কনটেক্সট ট্যাগ) */}
+          <span
+            className="text-[9px] px-2 py-0.5 rounded-full font-mono uppercase tracking-wide"
+            style={{
+              color: PALETTE.accent,
+              backgroundColor: `${PALETTE.accent}14`,
+              border: `1px solid ${PALETTE.accent}33`,
+            }}
+          >
+            {t.type === "education" ? "Degree" : "Certificate"}
+          </span>
+        </div>
+        <h4 className="font-display font-semibold text-lg md:text-xl text-slate-800 transition-colors">
+          {t.title}
+        </h4>
+        <p className="text-sm mt-1 font-body text-slate-600 font-normal">
+          {t.place}
+          {cleanMeta && (
+            <>
+              <span className="opacity-40"> · </span>
+              {cleanMeta}
+            </>
+          )}
+        </p>
+      </motion.li>
+    );
+  };
+
   return (
     <section
       id="path"
-      className="relative px-6 md:px-10 py-28 md:py-36 overflow-hidden"
+      className="relative px-6 md:px-10 py-16 md:py-20 overflow-hidden"
       style={{ backgroundColor: PALETTE.bg, color: PALETTE.text }}
     >
       {/* 3D Interactive Layer (Background) */}
@@ -67,10 +129,15 @@ export default function Timeline() {
             className="eyebrow mb-4 font-mono text-xs tracking-[0.2em]"
             style={{ color: PALETTE.accent }}
           >
-            05 / THE PATH HERE
+            04 / EDUCATION & CERTIFICATIONS | THE PATH HERE
           </p>
           <h2 className="font-display font-semibold text-3xl md:text-5xl tracking-tight">
-            2016 to 2026, in order.
+            EDUCATION &{" "}
+            <span style={{ color: PALETTE.accent }}>CERTIFICATIONS</span>
+          </h2>
+          <h2 className="font-display font-semibold text-3xl md:text-5xl tracking-tight">
+            <span style={{ color: PALETTE.accent }}> 2016 to 2026,</span>in
+            order.
           </h2>
         </div>
 
@@ -110,38 +177,7 @@ export default function Timeline() {
               viewport={{ once: true, amount: 0.1 }}
               className="space-y-8"
             >
-              {educationItems.map((t) => (
-                <motion.li
-                  key={t.title + t.year}
-                  variants={itemVariants}
-                  className="group relative pl-5 border-l-2 transition-colors duration-300"
-                  style={{ borderColor: `${PALETTE.line}55` }}
-                  whileHover={{ borderColor: PALETTE.accent }}
-                >
-                  {/* Timeline Node Bullet point effect on hover */}
-                  <div
-                    className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full border bg-white transition-transform duration-300 group-hover:scale-150"
-                    style={{
-                      borderColor: PALETTE.accent,
-                      backgroundColor: PALETTE.bg,
-                    }}
-                  />
-                  <div className="flex items-baseline gap-3 mb-1">
-                    <span
-                      className="font-mono text-xs font-bold"
-                      style={{ color: PALETTE.accent }}
-                    >
-                      {t.year}
-                    </span>
-                  </div>
-                  <h4 className="font-display font-semibold text-lg md:text-xl text-slate-800 transition-colors">
-                    {t.title}
-                  </h4>
-                  <p className="text-sm mt-1 font-body text-slate-600 font-normal">
-                    {t.place} <span className="opacity-40">·</span> {t.meta}
-                  </p>
-                </motion.li>
-              ))}
+              {educationItems.map(renderItem)}
             </motion.ul>
           </div>
 
@@ -173,38 +209,7 @@ export default function Timeline() {
               viewport={{ once: true, amount: 0.1 }}
               className="space-y-8"
             >
-              {certificateItems.map((t) => (
-                <motion.li
-                  key={t.title + t.year}
-                  variants={itemVariants}
-                  className="group relative pl-5 border-l-2 transition-colors duration-300"
-                  style={{ borderColor: `${PALETTE.line}55` }}
-                  whileHover={{ borderColor: PALETTE.accent }}
-                >
-                  {/* Timeline Node Bullet point effect on hover */}
-                  <div
-                    className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full border bg-white transition-transform duration-300 group-hover:scale-150"
-                    style={{
-                      borderColor: PALETTE.accent,
-                      backgroundColor: PALETTE.bg,
-                    }}
-                  />
-                  <div className="flex items-baseline gap-3 mb-1">
-                    <span
-                      className="font-mono text-xs font-bold"
-                      style={{ color: PALETTE.accent }}
-                    >
-                      {t.year}
-                    </span>
-                  </div>
-                  <h4 className="font-display font-semibold text-lg md:text-xl text-slate-800 transition-colors">
-                    {t.title}
-                  </h4>
-                  <p className="text-sm mt-1 font-body text-slate-600 font-normal">
-                    {t.place} <span className="opacity-40">·</span> {t.meta}
-                  </p>
-                </motion.li>
-              ))}
+              {certificateItems.map(renderItem)}
             </motion.ul>
           </div>
         </div>

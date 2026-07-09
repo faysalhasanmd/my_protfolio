@@ -1,12 +1,13 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { profile } from "@/lib/data";
 
 // কাস্টম থ্রি ডট জেএস নেটওয়ার্ক সিনটি SSR ফলস রেখে ডাইনামিকালি লোড করা হলো
 const NetworkScene = dynamic(() => import("./NetworkScene"), { ssr: false });
+// MERN স্ট্যাক লেয়ার সিন — হিরো সেকশনের সিগনেচার এলিমেন্ট
+const StackScene = dynamic(() => import("./StackScene"), { ssr: false });
 
 const PALETTE = {
   bg: "#FBF7F4",
@@ -33,44 +34,6 @@ const item = {
 };
 
 export default function Hero() {
-  const rightSideRef = useRef(null);
-
-  // মাউস ট্র্যাকিং মোশন ভ্যালু
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // স্মুথ বসানোর জন্য স্প্রিং কনফিগারেশন
-  const springConfig = { stiffness: 120, damping: 20 };
-  const rotateX = useSpring(
-    useTransform(mouseY, [-0.5, 0.5], [15, -15]),
-    springConfig,
-  );
-  const rotateY = useSpring(
-    useTransform(mouseX, [-0.5, 0.5], [-15, 15]),
-    springConfig,
-  );
-  const floatY = useSpring(
-    useTransform(mouseY, [-0.5, 0.5], [-10, 10]),
-    springConfig,
-  );
-
-  // মাউস পজিশন ক্যালকুলেট করার ফাংশন
-  function handleMouseMove(e) {
-    if (!rightSideRef.current) return;
-    const rect = rightSideRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const x = (e.clientX - rect.left) / width - 0.5;
-    const y = (e.clientY - rect.top) / height - 0.5;
-    mouseX.set(x);
-    mouseY.set(y);
-  }
-
-  function handleMouseLeave() {
-    mouseX.set(0);
-    mouseY.set(0);
-  }
-
   return (
     <section
       id="top"
@@ -93,7 +56,7 @@ export default function Hero() {
       <div className="w-full max-w-6xl mx-auto px-6 md:px-10 z-10 py-20 md:py-0">
         {/* ২-কলাম গ্রিড লেআউট */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* বামদিকের টেক্সট কন্টেন্ট এরিয়া (Column 7) */}
+          {/* বামদিকের টেক্সট কন্টেন্ট এরিয়া (Column 7) */}
           <motion.div
             variants={container}
             initial="hidden"
@@ -105,7 +68,7 @@ export default function Hero() {
               className="eyebrow mb-6 font-mono text-xs tracking-[0.2em] uppercase font-bold"
               style={{ color: PALETTE.accent }}
             >
-              Node 04 · Tangail, Bangladesh
+              Mirpur, Dhaka, Bangladesh
             </motion.p>
 
             <motion.h1
@@ -183,81 +146,26 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* ডানদিকের 3D Motion Interactive Card এরিয়া (Column 5) */}
+          {/* ডানদিকের MERN Stack 3D সিন (Column 5) */}
           <motion.div
-            ref={rightSideRef}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
-            className="lg:col-span-5 hidden lg:flex justify-center items-center relative cursor-grab active:cursor-grabbing"
-            style={{ perspective: 1000 }}
+            className="lg:col-span-5 hidden lg:flex justify-center items-center relative"
           >
-            <motion.div
+            {/* Soft ambient glow behind the stack — no dashed rings, no
+                generic glass card; the stack itself is the whole signature. */}
+            <div
+              className="absolute rounded-full blur-3xl pointer-events-none"
               style={{
-                rotateX,
-                rotateY,
-                y: floatY,
-                transformStyle: "preserve-3d",
+                width: "340px",
+                height: "340px",
+                background: `radial-gradient(circle, ${PALETTE.mist}55, transparent 70%)`,
               }}
-              className="w-[360px] h-[360px] md:w-[400px] md:h-[400px] rounded-[40px] border border-white/40 bg-white/10 backdrop-blur-xl relative flex items-center justify-center shadow-[0_30px_60px_rgba(0,0,0,0.06)]"
-            >
-              {/* Outer Decorative Abstract Ring 1 */}
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[85%] h-[85%] rounded-full border border-dashed border-slate-400/30"
-                style={{ transform: "translateZ(20px)" }}
-              />
-
-              {/* Outer Decorative Abstract Ring 2 */}
-              <motion.div
-                animate={{ rotate: -360 }}
-                transition={{ duration: 35, repeat: Infinity, ease: "linear" }}
-                className="absolute w-[65%] h-[65%] rounded-full border border-slate-300/40"
-                style={{ transform: "translateZ(40px)" }}
-              />
-
-              {/* Glowing Ambient Core Node */}
-              <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{
-                  duration: 4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="w-28 h-28 rounded-full bg-gradient-to-tr from-[#7C9EC4] to-[#AFD3DE] opacity-80 blur-xl absolute"
-              />
-
-              {/* Center Floating Abstract 3D Cube/Card Mesh */}
-              <motion.div
-                style={{ transform: "translateZ(60px)" }}
-                animate={{ y: [0, -12, 0] }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className="w-32 h-32 rounded-3xl bg-white/80 border border-white shadow-xl flex flex-col justify-between p-5 backdrop-blur-md"
-              >
-                <div className="w-8 h-8 rounded-lg bg-[#7C9EC4]/20 flex items-center justify-center">
-                  <div className="w-3 h-3 rounded-full bg-[#7C9EC4] animate-pulse" />
-                </div>
-                <div className="space-y-1">
-                  <div className="h-2 w-16 bg-slate-300 rounded" />
-                  <div className="h-1.5 w-10 bg-slate-200 rounded" />
-                </div>
-              </motion.div>
-
-              {/* Extra Floating Small Tag over the Mesh */}
-              <motion.div
-                style={{ transform: "translateZ(80px)" }}
-                className="absolute bottom-16 right-12 px-3 py-1.5 bg-slate-900 text-white font-mono text-[10px] rounded-xl shadow-lg"
-              >
-                {"<Dev />"}
-              </motion.div>
-            </motion.div>
+            />
+            <div className="relative w-[420px] h-[420px] md:w-[460px] md:h-[460px]">
+              <StackScene />
+            </div>
           </motion.div>
         </div>
       </div>

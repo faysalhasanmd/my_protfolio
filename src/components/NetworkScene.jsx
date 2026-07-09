@@ -18,8 +18,8 @@ function generateNodes() {
       new THREE.Vector3(
         r * Math.sin(phi) * Math.cos(theta),
         r * Math.sin(phi) * Math.sin(theta) * 0.6,
-        r * Math.cos(phi)
-      )
+        r * Math.cos(phi),
+      ),
     );
   }
   return nodes;
@@ -57,12 +57,12 @@ function Mesh() {
     group.current.rotation.x = THREE.MathUtils.lerp(
       group.current.rotation.x,
       state.pointer.y * 0.15,
-      0.03
+      0.03,
     );
     group.current.rotation.z = THREE.MathUtils.lerp(
       group.current.rotation.z,
       state.pointer.x * -0.08,
-      0.03
+      0.03,
     );
   });
 
@@ -88,7 +88,13 @@ function Mesh() {
             itemSize={3}
           />
         </bufferGeometry>
-        <pointsMaterial color="#b7d3e0" size={0.09} sizeAttenuation transparent opacity={0.9} />
+        <pointsMaterial
+          color="#b7d3e0"
+          size={0.09}
+          sizeAttenuation
+          transparent
+          opacity={0.9}
+        />
       </points>
     </group>
   );
@@ -97,8 +103,16 @@ function Mesh() {
 function Rig() {
   const { camera } = useThree();
   useFrame((state) => {
-    camera.position.x = THREE.MathUtils.lerp(camera.position.x, state.pointer.x * 0.6, 0.02);
-    camera.position.y = THREE.MathUtils.lerp(camera.position.y, state.pointer.y * 0.3, 0.02);
+    camera.position.x = THREE.MathUtils.lerp(
+      camera.position.x,
+      state.pointer.x * 0.6,
+      0.02,
+    );
+    camera.position.y = THREE.MathUtils.lerp(
+      camera.position.y,
+      state.pointer.y * 0.3,
+      0.02,
+    );
     camera.lookAt(0, 0, 0);
   });
   return null;

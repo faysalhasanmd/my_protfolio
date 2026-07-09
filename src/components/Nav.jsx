@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
   { href: "#top", label: "Home" },
+  { href: "#about", label: "About" },
   { href: "#skills", label: "Skills" },
   { href: "#work", label: "Work" },
   { href: "#path", label: "Education" },
@@ -71,7 +72,7 @@ export default function Nav() {
           href="#top"
           className="font-display font-semibold text-paper text-sm tracking-tight focus-ring"
         >
-          FH<span className="text-steel">.</span>dev
+          faysal<span className="text-steel">.</span>dev
         </a>
 
         {/* Desktop nav — pill-style active/hover highlight */}

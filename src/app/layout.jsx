@@ -7,6 +7,7 @@ import "@fontsource/inter/600.css";
 import "@fontsource/jetbrains-mono/400.css";
 import "@fontsource/jetbrains-mono/500.css";
 import "./globals.css";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 export const metadata = {
   title: "Md. Faysal Hasan — MERN Stack Developer",
@@ -18,7 +19,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body suppressHydrationWarning className="font-body">
-        {children}
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>
   );

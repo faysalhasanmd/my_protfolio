@@ -196,7 +196,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="relative px-6 md:px-10 py-28 md:py-36 overflow-hidden"
+      className="relative px-6 md:px-10 py-16 md:py-20 overflow-hidden"
       style={{ backgroundColor: PALETTE.bg, color: PALETTE.text }}
     >
       {/* 3D Interactive Layer (Background) */}
@@ -230,7 +230,7 @@ export default function Skills() {
             className="eyebrow mb-4 font-mono text-xs tracking-[0.2em] font-bold"
             style={{ color: PALETTE.accent }}
           >
-            03 / TOOLKIT
+            02 / SKILLS | TOOLKIT
           </p>
           <h2 className="font-display font-semibold text-3xl md:text-5xl tracking-tight">
             Technologies I{" "}

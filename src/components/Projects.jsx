@@ -214,7 +214,7 @@ export default function Projects() {
   return (
     <section
       id="work"
-      className="relative px-6 md:px-10 py-28 md:py-36 overflow-hidden"
+      className="relative px-6 md:px-10 py-16 md:py-20 overflow-hidden"
       style={{ backgroundColor: PALETTE.bg }}
     >
       {/* 3D Interactive Layer (Background) */}
@@ -237,10 +237,11 @@ export default function Projects() {
             className="eyebrow mb-3 font-mono text-xs tracking-[0.25em] uppercase font-bold"
             style={{ color: PALETTE.accent }}
           >
-            04 / EXPERIMENTAL BUILDS
+            03 / PROJECT | EXPERIMENTAL BUILDS
           </p>
           <h2 className="font-display font-bold text-4xl md:text-5xl tracking-tight text-slate-900">
-            Three products, shipped and live.
+            Three products,{" "}
+            <span style={{ color: PALETTE.accent }}>shipped and live</span>.
           </h2>
         </div>
 

@@ -1,14 +1,14 @@
 export const profile = {
   name: "Md. Faysal Hasan",
   role: "MERN Stack Developer",
-  location: "Tangail, Bangladesh",
+  location: "Mirpur, Dhaka, Bangladesh",
   phone: "+8801798484639",
   email: "faysalhasanmd393@gmail.com",
   linkedin: "https://linkedin.com/in/faysal393/",
   github: "https://github.com/faysalhasanmd/",
   bloodGroup: "A+",
   objective:
-    "I'm a MERN Stack Developer with a BSc in CSE, and my journey in web development started through structured learning at Programming Hero and hands-on projects during my university years. I enjoy building things that actually work — clean, practical applications that solve real problems. I'm looking for a team where I can keep growing and put my skills to good use.",
+    "I'm a MERN Stack Developer with a BSc in CSE, and my journey in web development started through structured learning at Programming Hero and hands-on projects during my university years. I enjoy building things that actually work clean, practical applications that solve real problems. I'm looking for a team where I can keep growing and put my skills to good use.",
 };
 
 export const skills = [
