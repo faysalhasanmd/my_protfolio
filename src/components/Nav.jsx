@@ -13,7 +13,7 @@ const links = [
 ];
 
 const RESUME_URL =
-  "https://drive.google.com/file/d/1Wk4ylpT7OmrMb0M6PGKH6gz-1uZvbsgw/view?usp=sharing";
+  "https://drive.google.com/file/d/1S3ukmEylkATc1IgmKUSvk0B5zYaFYKzk/view?usp=sharing";
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
