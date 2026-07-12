@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Tailwind v4-e class-based dark mode enable korar jonno — 
+   na hoile default e শুধু prefers-color-scheme follow korto */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-body: "Inter", sans-serif;
   --font-heading: "Space Grotesk", sans-serif;
@@ -22,6 +26,45 @@
   --sand: #cbbba3;
   --paper: #fbf7f1;
   --mist: #f8f8f6;
+
+  --hero-bg: #fbf7f4;
+  --hero-text: #2e3e4e;
+  --hero-accent: #7c9ec4;
+  --hero-mist: #afd3de;
+  --hero-line: #cdbea7;
+
+  /* Fixed brand constants — Nav-er mix-blend-difference trick 
+     ei value gulor upor depend kore, tai eigula .dark-e override 
+     kora jabe na, na hoile invisible hoye jabe */
+  --nav-light: #fbf7f1;
+  --nav-dark: #181c24;
+}
+
+/* Dark theme — .dark class documentElement-e thakle eigula override hobe.
+   Duitai override kora lagbe: @theme-er --color-* (Tailwind utility class-er 
+   jonno, jemon bg-paper, text-ink) ar niche-r bare vars (custom CSS-er jonno) */
+.dark {
+  --color-ink: #f3e3d3;
+  --color-steel: #8fb4dd;
+  --color-powder: #2a3a4a;
+  --color-cream: #2b2620;
+  --color-sand: #4a4030;
+  --color-paper: #14171d;
+  --color-mist: #1b1f27;
+
+  --ink: #f3e3d3;
+  --steel: #8fb4dd;
+  --powder: #2a3a4a;
+  --cream: #2b2620;
+  --sand: #4a4030;
+  --paper: #14171d;
+  --mist: #1b1f27;
+
+  --hero-bg: #12151c;
+  --hero-text: #eef2f6;
+  --hero-accent: #8fb4dd;
+  --hero-mist: #3a4d5c;
+  --hero-line: #5a4f3d;
 }
 
 * {
@@ -36,6 +79,9 @@ body {
   background-color: var(--paper);
   color: var(--ink);
   overflow-x: hidden;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
 ::selection {

@@ -9,13 +9,20 @@ const NetworkScene = dynamic(() => import("./NetworkScene"), { ssr: false });
 // MERN স্ট্যাক লেয়ার সিন — হিরো সেকশনের সিগনেচার এলিমেন্ট
 const StackScene = dynamic(() => import("./StackScene"), { ssr: false });
 
+// Hardcoded hex-er bodole CSS variable — globals.css-er .dark class
+// toggle hole eigula automatic update hoye jabe, kono re-render lagbe na
 const PALETTE = {
-  bg: "#FBF7F4",
-  text: "#2E3E4E",
-  accent: "#7C9EC4",
-  mist: "#AFD3DE",
-  line: "#CDBEA7",
+  bg: "var(--hero-bg)",
+  text: "var(--hero-text)",
+  accent: "var(--hero-accent)",
+  mist: "var(--hero-mist)",
+  line: "var(--hero-line)",
 };
+
+// var() color-er upor alpha/transparency lagate hex suffix (jemon `${color}33`)
+// kaj kore na — color-mix() diye kortey hoy
+const withAlpha = (cssVar, percent) =>
+  `color-mix(in srgb, ${cssVar} ${percent}%, transparent)`;
 
 const container = {
   hidden: {},
@@ -37,7 +44,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative min-h-screen overflow-hidden flex items-center"
+      className="relative min-h-screen overflow-hidden flex items-center transition-colors duration-300"
       style={{ backgroundColor: PALETTE.bg, color: PALETTE.text }}
     >
       {/* 3D Interactivity Layer */}
@@ -49,7 +56,10 @@ export default function Hero() {
       <div
         className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b via-transparent"
         style={{
-          backgroundImage: `linear-gradient(to bottom, ${PALETTE.bg}11, transparent 65%, ${PALETTE.bg})`,
+          backgroundImage: `linear-gradient(to bottom, ${withAlpha(
+            PALETTE.bg,
+            7,
+          )}, transparent 65%, ${PALETTE.bg})`,
         }}
       />
 
@@ -129,15 +139,21 @@ export default function Hero() {
                 href="#contact"
                 className="rounded-full border px-6 py-3.5 font-semibold transition-all duration-300 bg-white/30 active:scale-[0.98]"
                 style={{
-                  borderColor: `${PALETTE.text}33`,
+                  borderColor: withAlpha(PALETTE.text, 20),
                   color: PALETTE.text,
                 }}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.borderColor = PALETTE.text;
-                  e.currentTarget.style.backgroundColor = `${PALETTE.mist}33`;
+                  e.currentTarget.style.backgroundColor = withAlpha(
+                    PALETTE.mist,
+                    20,
+                  );
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = `${PALETTE.text}33`;
+                  e.currentTarget.style.borderColor = withAlpha(
+                    PALETTE.text,
+                    20,
+                  );
                   e.currentTarget.style.backgroundColor = "transparent";
                 }}
               >
@@ -153,14 +169,15 @@ export default function Hero() {
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
             className="lg:col-span-5 hidden lg:flex justify-center items-center relative"
           >
-            {/* Soft ambient glow behind the stack — no dashed rings, no
-                generic glass card; the stack itself is the whole signature. */}
             <div
               className="absolute rounded-full blur-3xl pointer-events-none"
               style={{
                 width: "340px",
                 height: "340px",
-                background: `radial-gradient(circle, ${PALETTE.mist}55, transparent 70%)`,
+                background: `radial-gradient(circle, ${withAlpha(
+                  PALETTE.mist,
+                  33,
+                )}, transparent 70%)`,
               }}
             />
             <div className="relative w-[420px] h-[420px] md:w-[460px] md:h-[460px]">
@@ -169,16 +186,6 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
-
-      {/* Bottom Scroll Footer indicator */}
-      {/* <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.5 }}
-        transition={{ delay: 1.4, duration: 0.8 }}
-        className="absolute bottom-8 left-6 md:left-10 z-10 eyebrow text-xs font-mono tracking-widest"
-      >
-        Scroll — 01 / 05
-      </motion.div> */}
     </section>
   );
 }

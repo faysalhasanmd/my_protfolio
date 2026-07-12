@@ -9,13 +9,20 @@ import * as SiIcons from "react-icons/si";
 // 3D Background Network Scene-টি SSR ফলস রেখে ডাইনামিকালি লোড করা হলো
 const NetworkScene = dynamic(() => import("./NetworkScene"), { ssr: false });
 
+// Hardcoded hex-er bodole CSS variable — .dark class toggle hole
+// eigula automatic update hobe (Hero.jsx-e j token banano hoyechilo, sheigulai reuse)
 const PALETTE = {
-  bg: "#FBF7F4",
-  text: "#2E3E4E",
-  accent: "#7C9EC4",
-  mist: "#AFD3DE",
-  line: "#CDBEA7",
+  bg: "var(--hero-bg)",
+  text: "var(--hero-text)",
+  accent: "var(--hero-accent)",
+  mist: "var(--hero-mist)",
+  line: "var(--hero-line)",
 };
+
+// var() color-er upor alpha lagate hex suffix (${color}88) kaj kore na —
+// color-mix() diye korte hoy
+const withAlpha = (cssVar, percent) =>
+  `color-mix(in srgb, ${cssVar} ${percent}%, transparent)`;
 
 const groups = [
   {
@@ -131,14 +138,14 @@ function TechCard({ item }) {
       <motion.div
         className="relative flex items-center justify-center w-16 h-16 rounded-2xl border overflow-hidden backdrop-blur-sm"
         style={{
-          background: `${PALETTE.mist}15`,
-          borderColor: `${PALETTE.line}55`,
+          background: withAlpha(PALETTE.mist, 15),
+          borderColor: withAlpha(PALETTE.line, 55),
         }}
         animate={
           reduceMotion
             ? {}
             : {
-                borderColor: hover ? `${color}77` : `${PALETTE.line}55`,
+                borderColor: hover ? `${color}77` : withAlpha(PALETTE.line, 55),
                 boxShadow: hover
                   ? `0 12px 30px -10px ${color}55, 0 0 0 1px ${color}15 inset`
                   : "0 0 0 0 transparent",
@@ -182,8 +189,8 @@ function TechCard({ item }) {
 
       <motion.span
         className="font-mono text-[11px] tracking-wide font-medium"
-        style={{ color: `${PALETTE.text}8C` }}
-        animate={{ color: hover ? color : `${PALETTE.text}8C` }}
+        style={{ color: withAlpha(PALETTE.text, 55) }}
+        animate={{ color: hover ? color : withAlpha(PALETTE.text, 55) }}
         transition={{ duration: 0.25 }}
       >
         {name}
@@ -196,7 +203,7 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="relative px-6 md:px-10 py-16 md:py-20 overflow-hidden"
+      className="relative px-6 md:px-10 py-16 md:py-20 overflow-hidden transition-colors duration-300"
       style={{ backgroundColor: PALETTE.bg, color: PALETTE.text }}
     >
       {/* 3D Interactive Layer (Background) */}
@@ -207,14 +214,17 @@ export default function Skills() {
       {/* Atmospheric gradient backdrop blur blending */}
       <div
         className="pointer-events-none absolute -top-40 left-1/3 w-[560px] h-[560px] rounded-full blur-[140px] z-0"
-        style={{ backgroundColor: `${PALETTE.mist}22` }}
+        style={{ backgroundColor: withAlpha(PALETTE.mist, 13) }}
       />
 
       {/* Gentle Bottom Fade */}
       <div
         className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-t via-transparent"
         style={{
-          backgroundImage: `linear-gradient(to top, ${PALETTE.bg}cc, transparent 40%)`,
+          backgroundImage: `linear-gradient(to top, ${withAlpha(
+            PALETTE.bg,
+            80,
+          )}, transparent 40%)`,
         }}
       />
 
@@ -238,7 +248,7 @@ export default function Skills() {
           </h2>
           <p
             className="mt-4 font-body max-w-xl text-sm md:text-base"
-            style={{ color: `${PALETTE.text}B3` }}
+            style={{ color: withAlpha(PALETTE.text, 70) }}
           >
             Here&apos;s the stack I rely on day-to-day to build modern,
             production-ready web apps.
@@ -261,7 +271,7 @@ export default function Skills() {
                 <span className="relative flex h-2 w-2">
                   <span
                     className="absolute inline-flex h-full w-full animate-ping rounded-full"
-                    style={{ backgroundColor: `${PALETTE.accent}88` }}
+                    style={{ backgroundColor: withAlpha(PALETTE.accent, 53) }}
                   />
                   <span
                     className="relative inline-flex rounded-full h-2 w-2"
@@ -281,7 +291,7 @@ export default function Skills() {
                   transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                   style={{
                     transformOrigin: "left",
-                    backgroundColor: `${PALETTE.line}55`,
+                    backgroundColor: withAlpha(PALETTE.line, 33),
                   }}
                   className="h-px flex-1"
                 />

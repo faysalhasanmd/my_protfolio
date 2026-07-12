@@ -10,17 +10,19 @@ const NetworkScene = dynamic(() => import("./NetworkScene"), { ssr: false });
 
 /**
  * ---- Portfolio Palette Maintenance ----
- * bg      -> Light Off-White  #FBF7F4
- * text    -> Deep Blue-Gray   #2E3E4E
- * accent  -> Dusty Blue       #7C9EC4
- * line    -> Warm Taupe       #CDBEA7
+ * Hardcoded hex-er bodole globals.css-er --hero-* CSS variable use kora hocche,
+ * jate .dark class toggle hole automatic update hoy
  */
 const PALETTE = {
-  bg: "#FBF7F4",
-  text: "#2E3E4E",
-  accent: "#7C9EC4",
-  line: "#CDBEA7",
+  bg: "var(--hero-bg)",
+  text: "var(--hero-text)",
+  accent: "var(--hero-accent)",
+  line: "var(--hero-line)",
 };
+
+// var() color-er upor alpha lagate hex suffix kaj kore na — color-mix() lagbe
+const withAlpha = (cssVar, percent) =>
+  `color-mix(in srgb, ${cssVar} ${percent}%, transparent)`;
 
 // meta স্ট্রিং থেকে GPA/CGPA সংক্রান্ত অংশ বাদ দেয় (ডেটা ফাইল না ছুঁয়েই)
 function stripGpa(meta = "") {
@@ -57,12 +59,12 @@ export default function Timeline() {
         key={t.title + t.year}
         variants={itemVariants}
         className="group relative pl-5 border-l-2 transition-colors duration-300"
-        style={{ borderColor: `${PALETTE.line}55` }}
-        whileHover={{ borderColor: PALETTE.accent }}
+        style={{ borderColor: withAlpha(PALETTE.line, 33) }}
+        whileHover={{ borderColor: "var(--hero-accent)" }}
       >
         {/* Timeline Node Bullet point effect on hover */}
         <div
-          className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full border bg-white transition-transform duration-300 group-hover:scale-150"
+          className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full border transition-transform duration-300 group-hover:scale-150"
           style={{
             borderColor: PALETTE.accent,
             backgroundColor: PALETTE.bg,
@@ -80,17 +82,17 @@ export default function Timeline() {
             className="text-[9px] px-2 py-0.5 rounded-full font-mono uppercase tracking-wide"
             style={{
               color: PALETTE.accent,
-              backgroundColor: `${PALETTE.accent}14`,
-              border: `1px solid ${PALETTE.accent}33`,
+              backgroundColor: withAlpha(PALETTE.accent, 8),
+              border: `1px solid ${withAlpha(PALETTE.accent, 20)}`,
             }}
           >
             {t.type === "education" ? "Degree" : "Certificate"}
           </span>
         </div>
-        <h4 className="font-display font-semibold text-lg md:text-xl text-slate-800 transition-colors">
+        <h4 className="font-display font-semibold text-lg md:text-xl text-slate-800 dark:text-slate-100 transition-colors">
           {t.title}
         </h4>
-        <p className="text-sm mt-1 font-body text-slate-600 font-normal">
+        <p className="text-sm mt-1 font-body text-slate-600 dark:text-slate-400 font-normal">
           {t.place}
           {cleanMeta && (
             <>
@@ -106,7 +108,7 @@ export default function Timeline() {
   return (
     <section
       id="path"
-      className="relative px-6 md:px-10 py-16 md:py-20 overflow-hidden"
+      className="relative px-6 md:px-10 py-16 md:py-20 overflow-hidden transition-colors duration-300"
       style={{ backgroundColor: PALETTE.bg, color: PALETTE.text }}
     >
       {/* 3D Interactive Layer (Background) */}
@@ -118,7 +120,10 @@ export default function Timeline() {
       <div
         className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b via-transparent"
         style={{
-          backgroundImage: `linear-gradient(to bottom, ${PALETTE.bg}dd, transparent 40%, ${PALETTE.bg}ee)`,
+          backgroundImage: `linear-gradient(to bottom, ${withAlpha(
+            PALETTE.bg,
+            87,
+          )}, transparent 40%, ${withAlpha(PALETTE.bg, 93)})`,
         }}
       />
 
@@ -153,7 +158,7 @@ export default function Timeline() {
           <div className="space-y-8">
             <div
               className="flex items-center gap-3 mb-6 border-b pb-4"
-              style={{ borderColor: `${PALETTE.line}44` }}
+              style={{ borderColor: withAlpha(PALETTE.line, 27) }}
             >
               <GraduationCap size={18} style={{ color: PALETTE.accent }} />
               <h3
@@ -185,7 +190,7 @@ export default function Timeline() {
           <div className="space-y-8">
             <div
               className="flex items-center gap-3 mb-6 border-b pb-4"
-              style={{ borderColor: `${PALETTE.line}44` }}
+              style={{ borderColor: withAlpha(PALETTE.line, 27) }}
             >
               <Award size={18} style={{ color: PALETTE.accent }} />
               <h3

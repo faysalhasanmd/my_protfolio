@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "./theme-toggle";
 
 const links = [
   { href: "#top", label: "Home" },
@@ -19,7 +20,6 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#top");
 
-  // Lock body scroll while the mobile drawer is open
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
     return () => {
@@ -27,14 +27,12 @@ export default function Nav() {
     };
   }, [open]);
 
-  // Close drawer on Escape
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && setOpen(false);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Track which section is active while scrolling
   useEffect(() => {
     const sections = links
       .map((l) => document.querySelector(l.href))
@@ -70,24 +68,24 @@ export default function Nav() {
       >
         <a
           href="#top"
-          className="font-display font-semibold text-paper text-sm tracking-tight focus-ring"
+          className="font-display font-semibold text-[color:var(--nav-light)] text-sm tracking-tight focus-ring"
         >
           faysal<span className="text-steel">.</span>dev
         </a>
 
         {/* Desktop nav — pill-style active/hover highlight */}
-        <nav className="hidden md:flex items-center gap-1 rounded-full border border-paper/15 bg-paper/5 p-1">
+        <nav className="hidden md:flex items-center gap-1 rounded-full border border-[color:var(--nav-light)]/15 bg-[color:var(--nav-light)]/5 p-1">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
               onClick={() => handleLinkClick(l.href)}
-              className="eyebrow relative rounded-full px-4 py-2 text-paper/80 transition-colors hover:text-paper focus-ring"
+              className="eyebrow relative rounded-full px-4 py-2 text-[color:var(--nav-light)]/80 transition-colors hover:text-[color:var(--nav-light)] focus-ring"
             >
               {active === l.href && (
                 <motion.span
                   layoutId="nav-pill"
-                  className="absolute inset-0 rounded-full bg-paper/15"
+                  className="absolute inset-0 rounded-full bg-[color:var(--nav-light)]/15"
                   transition={{ type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
@@ -97,11 +95,14 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
+          {/* Theme toggle — ekhon mobile-eo dekha jay, hamburger-er thik left side-e */}
+          <ThemeToggle />
+
           <a
             href={RESUME_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="eyebrow hidden sm:inline-block text-paper border border-paper/40 rounded-full px-4 py-2 hover:bg-paper hover:text-ink transition-colors focus-ring"
+            className="eyebrow hidden sm:inline-block text-[color:var(--nav-light)] border border-[color:var(--nav-light)]/40 rounded-full px-4 py-2 hover:bg-[color:var(--nav-light)] hover:text-[color:var(--nav-dark)] transition-colors focus-ring"
           >
             Résumé
           </a>
@@ -112,11 +113,11 @@ export default function Nav() {
             onClick={() => setOpen(true)}
             aria-label="Open menu"
             aria-expanded={open}
-            className="md:hidden relative z-10 flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-full border border-paper/40 focus-ring"
+            className="md:hidden relative z-10 flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-full border border-[color:var(--nav-light)]/40 focus-ring"
           >
-            <span className="block h-[1.5px] w-4 bg-paper transition-transform" />
-            <span className="block h-[1.5px] w-4 bg-paper transition-opacity" />
-            <span className="block h-[1.5px] w-4 bg-paper transition-transform" />
+            <span className="block h-[1.5px] w-4 bg-[color:var(--nav-light)] transition-transform" />
+            <span className="block h-[1.5px] w-4 bg-[color:var(--nav-light)] transition-opacity" />
+            <span className="block h-[1.5px] w-4 bg-[color:var(--nav-light)] transition-transform" />
           </button>
         </div>
       </motion.header>
@@ -132,31 +133,31 @@ export default function Nav() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
               onClick={() => setOpen(false)}
-              className="fixed inset-0 z-[60] bg-ink/60 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-[60] bg-[color:var(--nav-dark)]/60 backdrop-blur-sm md:hidden"
             />
 
-            {/* Panel */}
+            {/* Panel — fixed dark navy chip, theme-r sathe change hoy na intentionally */}
             <motion.div
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-              className="fixed top-0 right-0 z-[70] flex h-full w-[78%] max-w-xs flex-col justify-between bg-ink px-8 py-8 md:hidden"
+              className="fixed top-0 right-0 z-[70] flex h-full w-[78%] max-w-xs flex-col justify-between bg-[color:var(--nav-dark)] px-8 py-8 md:hidden"
             >
               <div>
                 <div className="flex items-center justify-between">
-                  <span className="font-display font-semibold text-paper text-sm">
+                  <span className="font-display font-semibold text-[color:var(--nav-light)] text-sm">
                     FH<span className="text-steel">.</span>dev
                   </span>
                   <button
                     type="button"
                     onClick={() => setOpen(false)}
                     aria-label="Close menu"
-                    className="flex h-9 w-9 items-center justify-center rounded-full border border-paper/40 text-paper focus-ring"
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-[color:var(--nav-light)]/40 text-[color:var(--nav-light)] focus-ring"
                   >
                     <span className="relative block h-4 w-4">
-                      <span className="absolute top-1/2 left-0 h-[1.5px] w-4 -translate-y-1/2 rotate-45 bg-paper" />
-                      <span className="absolute top-1/2 left-0 h-[1.5px] w-4 -translate-y-1/2 -rotate-45 bg-paper" />
+                      <span className="absolute top-1/2 left-0 h-[1.5px] w-4 -translate-y-1/2 rotate-45 bg-[color:var(--nav-light)]" />
+                      <span className="absolute top-1/2 left-0 h-[1.5px] w-4 -translate-y-1/2 -rotate-45 bg-[color:var(--nav-light)]" />
                     </span>
                   </button>
                 </div>
@@ -172,8 +173,8 @@ export default function Nav() {
                       transition={{ delay: 0.1 + i * 0.06, duration: 0.4 }}
                       className={`eyebrow text-2xl font-display normal-case tracking-normal transition-colors focus-ring ${
                         active === l.href
-                          ? "text-paper"
-                          : "text-paper/60 hover:text-paper"
+                          ? "text-[color:var(--nav-light)]"
+                          : "text-[color:var(--nav-light)]/60 hover:text-[color:var(--nav-light)]"
                       }`}
                     >
                       {l.label}
@@ -186,7 +187,7 @@ export default function Nav() {
                 href={RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="eyebrow text-center text-paper border border-paper/40 rounded-full px-4 py-3 hover:bg-paper hover:text-ink transition-colors focus-ring"
+                className="eyebrow text-center text-[color:var(--nav-light)] border border-[color:var(--nav-light)]/40 rounded-full px-4 py-3 hover:bg-[color:var(--nav-light)] hover:text-[color:var(--nav-dark)] transition-colors focus-ring"
               >
                 Résumé
               </a>

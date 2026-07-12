@@ -53,12 +53,18 @@ const projectData = [
   },
 ];
 
+// Hardcoded hex-er bodole CSS variable — .dark class toggle hole
+// automatic update hobe (globals.css-e j --hero-* token banano hoyeche, sheigulai reuse)
 const PALETTE = {
-  bg: "#FBF7F4",
-  text: "#1E293B",
-  accent: "#7C9EC4",
-  line: "rgba(30, 41, 59, 0.08)",
+  bg: "var(--hero-bg)",
+  text: "var(--hero-text)",
+  accent: "var(--hero-accent)",
+  line: "var(--hero-line)",
 };
+
+// var() color-er upor alpha lagate hex suffix kaj kore na — color-mix() lagbe
+const withAlpha = (cssVar, percent) =>
+  `color-mix(in srgb, ${cssVar} ${percent}%, transparent)`;
 
 function GithubIcon({ size = 16 }) {
   return (
@@ -120,21 +126,21 @@ function EqualProjectCard({ project, index, onOpenModal }) {
         delay: index * 0.1,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="group relative w-full h-[540px] rounded-[24px] bg-white/90 backdrop-blur-md border border-slate-200/80 p-5 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] transition-all duration-300 z-10"
+      className="group relative w-full h-[540px] rounded-[24px] bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/60 p-5 flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)] dark:hover:shadow-[0_20px_40px_rgba(0,0,0,0.35)] transition-all duration-300 z-10"
     >
       <div className="space-y-4">
         {/* Full Display Image Showcase Area */}
-        <div className="w-full h-56 rounded-xl overflow-hidden bg-slate-100 relative border border-slate-100">
+        <div className="w-full h-56 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 relative border border-slate-100 dark:border-slate-700">
           <motion.img
             src={project.image}
             alt={project.name}
             className="w-full h-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/5 transition-colors duration-300" />
+          <div className="absolute inset-0 bg-slate-950/0 group-hover:bg-slate-950/5 dark:group-hover:bg-slate-950/20 transition-colors duration-300" />
 
           {/* Project Type Badge Floating over image */}
-          <div className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-white/90 backdrop-blur-sm border border-slate-200 shadow-sm">
-            <span className="font-mono text-[10px] font-bold text-slate-700 tracking-wide uppercase">
+          <div className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-white/90 dark:bg-slate-900/85 backdrop-blur-sm border border-slate-200 dark:border-slate-700 shadow-sm">
+            <span className="font-mono text-[10px] font-bold text-slate-700 dark:text-slate-300 tracking-wide uppercase">
               {project.kind}
             </span>
           </div>
@@ -143,7 +149,7 @@ function EqualProjectCard({ project, index, onOpenModal }) {
         {/* Content Details Block */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="font-mono text-[11px] text-slate-400 font-bold tracking-widest">
+            <span className="font-mono text-[11px] text-slate-400 dark:text-slate-500 font-bold tracking-widest">
               PROJECT // 0{index + 1}
             </span>
             <motion.a
@@ -152,30 +158,30 @@ function EqualProjectCard({ project, index, onOpenModal }) {
               href={project.live}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-slate-400 hover:text-slate-800 transition-colors"
+              className="text-slate-400 hover:text-slate-800 dark:text-slate-500 dark:hover:text-slate-200 transition-colors"
             >
               <ExternalLink size={14} />
             </motion.a>
           </div>
 
-          <h3 className="font-display font-bold text-xl text-slate-900 tracking-tight group-hover:text-[#7C9EC4] transition-colors duration-300">
+          <h3 className="font-display font-bold text-xl text-slate-900 dark:text-slate-50 tracking-tight group-hover:text-[#7C9EC4] transition-colors duration-300">
             {project.name}
           </h3>
 
-          <p className="text-slate-600 text-xs md:text-sm leading-relaxed font-normal line-clamp-3">
+          <p className="text-slate-600 dark:text-slate-400 text-xs md:text-sm leading-relaxed font-normal line-clamp-3">
             {project.description}
           </p>
         </div>
       </div>
 
       {/* Bottom Footer Section (Stack + Buttons) */}
-      <div className="space-y-4 pt-3 border-t border-slate-100">
+      <div className="space-y-4 pt-3 border-t border-slate-100 dark:border-slate-800">
         {/* Modern Tech Stack Badges */}
         <div className="flex flex-wrap gap-1">
           {project.stack.map((s) => (
             <span
               key={s}
-              className="font-mono text-[9px] font-medium px-2 py-0.5 rounded-md bg-slate-50 border border-slate-200 text-slate-600"
+              className="font-mono text-[9px] font-medium px-2 py-0.5 rounded-md bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300"
             >
               {s}
             </span>
@@ -188,7 +194,7 @@ function EqualProjectCard({ project, index, onOpenModal }) {
             whileHover={{ y: -1 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => onOpenModal(project)}
-            className="flex-1 flex items-center justify-center gap-1.5 font-mono text-[11px] font-bold py-2.5 rounded-xl bg-slate-900 text-white hover:bg-slate-800 transition-colors shadow-sm"
+            className="flex-1 flex items-center justify-center gap-1.5 font-mono text-[11px] font-bold py-2.5 rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-white transition-colors shadow-sm"
           >
             <Eye size={12} /> Details
           </motion.button>
@@ -198,7 +204,7 @@ function EqualProjectCard({ project, index, onOpenModal }) {
             href={project.live}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 flex items-center justify-center gap-1.5 font-mono text-[11px] font-bold py-2.5 rounded-xl border border-slate-200 text-slate-700 bg-white hover:bg-slate-50 transition-colors"
+            className="flex-1 flex items-center justify-center gap-1.5 font-mono text-[11px] font-bold py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
           >
             Live Demo
           </motion.a>
@@ -214,7 +220,7 @@ export default function Projects() {
   return (
     <section
       id="work"
-      className="relative px-6 md:px-10 py-16 md:py-20 overflow-hidden"
+      className="relative px-6 md:px-10 py-16 md:py-20 overflow-hidden transition-colors duration-300"
       style={{ backgroundColor: PALETTE.bg }}
     >
       {/* 3D Interactive Layer (Background) */}
@@ -226,7 +232,10 @@ export default function Projects() {
       <div
         className="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b via-transparent"
         style={{
-          backgroundImage: `linear-gradient(to bottom, ${PALETTE.bg}dd, transparent 40%, ${PALETTE.bg}ee)`,
+          backgroundImage: `linear-gradient(to bottom, ${withAlpha(
+            PALETTE.bg,
+            87,
+          )}, transparent 40%, ${withAlpha(PALETTE.bg, 93)})`,
         }}
       />
 
@@ -239,7 +248,7 @@ export default function Projects() {
           >
             03 / PROJECT | EXPERIMENTAL BUILDS
           </p>
-          <h2 className="font-display font-bold text-4xl md:text-5xl tracking-tight text-slate-900">
+          <h2 className="font-display font-bold text-4xl md:text-5xl tracking-tight text-slate-900 dark:text-slate-50">
             Three products,{" "}
             <span style={{ color: PALETTE.accent }}>shipped and live</span>.
           </h2>
@@ -267,7 +276,7 @@ export default function Projects() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setActiveProject(null)}
-              className="absolute inset-0 bg-slate-950/40 backdrop-blur-sm"
+              className="absolute inset-0 bg-slate-950/40 dark:bg-slate-950/70 backdrop-blur-sm"
             />
 
             <motion.div
@@ -275,19 +284,19 @@ export default function Projects() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.97, y: 20 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-xl bg-white rounded-[24px] overflow-hidden shadow-2xl z-5 z-10 border border-slate-100"
+              className="relative w-full max-w-xl bg-white dark:bg-slate-900 rounded-[24px] overflow-hidden shadow-2xl z-5 z-10 border border-slate-100 dark:border-slate-700"
             >
               {/* Modal Banner Showcase */}
-              <div className="h-52 md:h-60 bg-slate-50 relative border-b border-slate-100">
+              <div className="h-52 md:h-60 bg-slate-50 dark:bg-slate-800 relative border-b border-slate-100 dark:border-slate-700">
                 <img
                   src={activeProject.image}
                   alt={activeProject.name}
                   className="w-full h-full object-cover object-top"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-black/5" />
+                <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-black/5 dark:from-slate-950/20 dark:to-black/20" />
                 <button
                   onClick={() => setActiveProject(null)}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-slate-900/60 text-white backdrop-blur-md hover:scale-105 active:scale-95 transition-transform"
+                  className="absolute top-4 right-4 p-2 rounded-full bg-slate-900/60 dark:bg-slate-100/80 text-white dark:text-slate-900 backdrop-blur-md hover:scale-105 active:scale-95 transition-transform"
                 >
                   <X size={14} />
                 </button>
@@ -296,27 +305,27 @@ export default function Projects() {
               {/* Description Drawer Body */}
               <div className="p-6 md:p-8 space-y-5">
                 <div className="space-y-1.5">
-                  <span className="font-mono text-[9px] uppercase tracking-widest bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded font-bold inline-block">
+                  <span className="font-mono text-[9px] uppercase tracking-widest bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2.5 py-0.5 rounded font-bold inline-block">
                     {activeProject.kind}
                   </span>
-                  <h4 className="text-2xl font-bold font-display text-slate-950 tracking-tight">
+                  <h4 className="text-2xl font-bold font-display text-slate-950 dark:text-slate-50 tracking-tight">
                     {activeProject.name}
                   </h4>
-                  <p className="text-slate-600 text-xs md:text-sm leading-relaxed pt-1">
+                  <p className="text-slate-600 dark:text-slate-400 text-xs md:text-sm leading-relaxed pt-1">
                     {activeProject.longDescription}
                   </p>
                 </div>
 
                 {/* Core Framework Tags mapping */}
                 <div className="space-y-1.5">
-                  <h5 className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  <h5 className="font-mono text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
                     Engineered Core
                   </h5>
                   <div className="flex flex-wrap gap-1">
                     {activeProject.stack.map((s) => (
                       <span
                         key={s}
-                        className="font-mono text-[10px] px-2.5 py-1 rounded-md bg-slate-50 border border-slate-200/60 text-slate-600 font-medium"
+                        className="font-mono text-[10px] px-2.5 py-1 rounded-md bg-slate-50 dark:bg-slate-800 border border-slate-200/60 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-medium"
                       >
                         {s}
                       </span>
@@ -325,14 +334,14 @@ export default function Projects() {
                 </div>
 
                 {/* Direct Redirection Links */}
-                <div className="flex gap-2 pt-4 border-t border-slate-100">
+                <div className="flex gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
                   <motion.a
                     whileHover={{ y: -1 }}
                     whileTap={{ scale: 0.98 }}
                     href={activeProject.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-1.5 font-mono text-xs font-semibold py-3 rounded-xl bg-slate-900 text-white shadow-sm hover:bg-slate-800"
+                    className="flex-1 flex items-center justify-center gap-1.5 font-mono text-xs font-semibold py-3 rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 shadow-sm hover:bg-slate-800 dark:hover:bg-white"
                   >
                     <GithubIcon size={14} /> Repository
                   </motion.a>
@@ -342,7 +351,7 @@ export default function Projects() {
                     href={activeProject.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 flex items-center justify-center gap-1.5 font-mono text-xs font-semibold py-3 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50"
+                    className="flex-1 flex items-center justify-center gap-1.5 font-mono text-xs font-semibold py-3 rounded-xl border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800"
                   >
                     <ExternalLink size={14} /> Live Build
                   </motion.a>
