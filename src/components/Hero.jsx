@@ -124,14 +124,9 @@ export default function Hero() {
             >
               <a
                 href="#work"
-                className="rounded-full px-6 py-3.5 font-semibold text-white transition-all duration-300 active:scale-[0.98] shadow-sm"
-                style={{ backgroundColor: PALETTE.text }}
-                onMouseEnter={(e) =>
-                  (e.currentTarget.style.backgroundColor = PALETTE.accent)
-                }
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.backgroundColor = PALETTE.text)
-                }
+                className="rounded-full px-6 py-3.5 font-semibold text-white transition-all duration-300 active:scale-[0.98] shadow-sm
+             bg-neutral-900 hover:bg-indigo-600
+             dark:bg-neutral-100 dark:text-neutral-900 dark:hover:bg-indigo-400"
               >
                 See the work
               </a>
