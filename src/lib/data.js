@@ -18,7 +18,14 @@ export const skills = [
   },
   {
     group: "Frontend",
-    tags: ["React.js", "Next.js", "HTML5", "CSS3", "Tailwind CSS"],
+    tags: [
+      "React.js",
+      "Next.js",
+      "TypeScript",
+      "HTML5",
+      "CSS3",
+      "Tailwind CSS",
+    ],
   },
   {
     group: "Backend",
