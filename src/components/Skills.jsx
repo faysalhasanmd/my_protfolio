@@ -6,11 +6,8 @@ import { TerminalSquare } from "lucide-react";
 import dynamic from "next/dynamic";
 import * as SiIcons from "react-icons/si";
 
-// 3D Background Network Scene-টি SSR ফলস রেখে ডাইনামিকালি লোড করা হলো
 const NetworkScene = dynamic(() => import("./NetworkScene"), { ssr: false });
 
-// Hardcoded hex-er bodole CSS variable — .dark class toggle hole
-// eigula automatic update hobe (Hero.jsx-e j token banano hoyechilo, sheigulai reuse)
 const PALETTE = {
   bg: "var(--hero-bg)",
   text: "var(--hero-text)",
@@ -19,8 +16,6 @@ const PALETTE = {
   line: "var(--hero-line)",
 };
 
-// var() color-er upor alpha lagate hex suffix (${color}88) kaj kore na —
-// color-mix() diye korte hoy
 const withAlpha = (cssVar, percent) =>
   `color-mix(in srgb, ${cssVar} ${percent}%, transparent)`;
 
@@ -36,6 +31,7 @@ const groups = [
         color: "#F0DB4F",
         dark: true,
       },
+      { name: "TypeScript", iconNames: ["SiTypescript"], color: "#3178C6" },
       { name: "Python", iconNames: ["SiPython"], color: "#3776AB" },
       { name: "C", iconNames: [], glyph: "C", color: "#A8B9CC" },
     ],

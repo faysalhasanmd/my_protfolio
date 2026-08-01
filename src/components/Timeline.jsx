@@ -18,6 +18,7 @@ const PALETTE = {
   text: "var(--hero-text)",
   accent: "var(--hero-accent)",
   line: "var(--hero-line)",
+  mist: "var(--hero-mist)",
 };
 
 // var() color-er upor alpha lagate hex suffix kaj kore na — color-mix() lagbe
@@ -52,7 +53,18 @@ export default function Timeline() {
     },
   };
 
-  const renderItem = (t) => {
+  const cardVariants = {
+    hidden: { opacity: 0, y: 12, scale: 0.98 },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
+  // Education: original vertical timeline-style item (few items, so vertical breathing room works)
+  const renderEducationItem = (t) => {
     const cleanMeta = stripGpa(t.meta);
     return (
       <motion.li
@@ -77,7 +89,6 @@ export default function Timeline() {
           >
             {t.year}
           </span>
-          {/* নতুন: টাইপ ব্যাজ (GPA-এর জায়গায় ছোট একটা কনটেক্সট ট্যাগ) */}
           <span
             className="text-[9px] px-2 py-0.5 rounded-full font-mono uppercase tracking-wide"
             style={{
@@ -86,13 +97,58 @@ export default function Timeline() {
               border: `1px solid ${withAlpha(PALETTE.accent, 20)}`,
             }}
           >
-            {t.type === "education" ? "Degree" : "Certificate"}
+            Degree
           </span>
         </div>
         <h4 className="font-display font-semibold text-lg md:text-xl text-slate-800 dark:text-slate-100 transition-colors">
           {t.title}
         </h4>
         <p className="text-sm mt-1 font-body text-slate-600 dark:text-slate-400 font-normal">
+          {t.place}
+          {cleanMeta && (
+            <>
+              <span className="opacity-40"> · </span>
+              {cleanMeta}
+            </>
+          )}
+        </p>
+      </motion.li>
+    );
+  };
+
+  // Certification: compact 2-column grid card — onek item, tai height save korte grid e boshano
+  const renderCertificateCard = (t) => {
+    const cleanMeta = stripGpa(t.meta);
+    return (
+      <motion.li
+        key={t.title + t.year}
+        variants={cardVariants}
+        className="group relative rounded-xl border p-4 transition-all duration-300"
+        style={{
+          background: withAlpha(PALETTE.mist, 10),
+          borderColor: withAlpha(PALETTE.line, 30),
+        }}
+        whileHover={{
+          borderColor: "var(--hero-accent)",
+          y: -2,
+        }}
+      >
+        <div className="flex items-center gap-2 mb-2">
+          <span
+            className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+            style={{ backgroundColor: PALETTE.accent }}
+          />
+          <span
+            className="font-mono text-[11px] font-bold"
+            style={{ color: PALETTE.accent }}
+          >
+            {t.year}
+          </span>
+        </div>
+        <h4 className="font-display font-semibold text-sm md:text-base text-slate-800 dark:text-slate-100 leading-snug">
+          {t.title}
+        </h4>
+        <p className="text-xs mt-1 font-body text-slate-600 dark:text-slate-400 font-normal">
           {t.place}
           {cleanMeta && (
             <>
@@ -154,7 +210,7 @@ export default function Timeline() {
             style={{ backgroundColor: PALETTE.line }}
           />
 
-          {/* LEFT COLUMN: Education */}
+          {/* LEFT COLUMN: Education (vertical timeline) */}
           <div className="space-y-8">
             <div
               className="flex items-center gap-3 mb-6 border-b pb-4"
@@ -182,11 +238,11 @@ export default function Timeline() {
               viewport={{ once: true, amount: 0.1 }}
               className="space-y-8"
             >
-              {educationItems.map(renderItem)}
+              {educationItems.map(renderEducationItem)}
             </motion.ul>
           </div>
 
-          {/* RIGHT COLUMN: Certificates */}
+          {/* RIGHT COLUMN: Certificates (compact 2-col grid) */}
           <div className="space-y-8">
             <div
               className="flex items-center gap-3 mb-6 border-b pb-4"
@@ -212,9 +268,9 @@ export default function Timeline() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.1 }}
-              className="space-y-8"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
             >
-              {certificateItems.map(renderItem)}
+              {certificateItems.map(renderCertificateCard)}
             </motion.ul>
           </div>
         </div>

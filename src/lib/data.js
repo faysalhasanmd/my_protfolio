@@ -127,6 +127,27 @@ export const timeline = [
     meta: "1 Year",
     type: "certification",
   },
+  {
+    year: "2026",
+    title: "Communication Hacks",
+    place: "10 Minute School",
+    meta: "Online Course",
+    type: "certification",
+  },
+  {
+    year: "2026",
+    title: "AI Workflows & Agents",
+    place: "Grameenphone Academy",
+    meta: "Certificate of Excellence",
+    type: "certification",
+  },
+  {
+    year: "2026",
+    title: "Personal Branding in AI Era",
+    place: "Grameenphone Academy",
+    meta: "Certificate of Excellence",
+    type: "certification",
+  },
 ];
 
 export const languages = [
