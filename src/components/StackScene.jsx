@@ -12,9 +12,8 @@ import {
   Cylinder,
 } from "@react-three/drei";
 
-// কী-বোর্ডের রিয়েলিস্টিক কী-গ্রিড (Html দিয়ে বানানো, পারফরম্যান্স-ফ্রেন্ডলি)
 function KeyboardKeys() {
-  const rows = [12, 12, 11, 10]; // প্রতি সারিতে কী-সংখ্যা (উপর থেকে নিচে)
+  const rows = [12, 12, 11, 10];
 
   return (
     <Html
@@ -54,7 +53,6 @@ function KeyboardKeys() {
             ))}
           </div>
         ))}
-        {/* স্পেসবার */}
         <div
           style={{
             display: "flex",
@@ -78,7 +76,6 @@ function KeyboardKeys() {
   );
 }
 
-// ল্যাপটপ স্ক্রিনে দেখানো "MERN Stack" কোড-এডিটর স্টাইল ডিসপ্লে
 function ScreenDisplay() {
   return (
     <Html
@@ -143,7 +140,6 @@ function ScreenDisplay() {
           />
         </div>
 
-        {/* মূল লোগো/টেক্সট */}
         <div style={{ textAlign: "center" }}>
           <div
             style={{
@@ -162,14 +158,14 @@ function ScreenDisplay() {
           <div
             style={{
               marginTop: "6px",
-              fontSize: "9px",
+              fontSize: "8px",
               color: "#94a3b8",
-              letterSpacing: "3px",
+              letterSpacing: "2px",
             }}
           >
-            MongoDB · Express · React · Node
+            MongoDB · Express · React · Node · PostgreSQL · Prisma
           </div>
-          {/* ব্লিঙ্কিং কার্সর সহ টার্মিনাল লাইন */}
+
           <div
             style={{
               marginTop: "14px",
@@ -203,31 +199,26 @@ function ScreenDisplay() {
   );
 }
 
-// ১. প্রফেশনাল ৩ডি ল্যাপটপ ও ডেস্ক সেটআপ মডেল
 function WorkspaceModel() {
   const deskRef = useRef(null);
 
   useFrame((state) => {
     if (!deskRef.current) return;
     const t = state.clock.elapsedTime;
-    // মৃদু ও স্মুথ আইডল মোশন (যাতে পুরো সিনটা জীবন্ত লাগে)
     deskRef.current.position.y = -0.5 + Math.sin(t * 1.2) * 0.02;
   });
 
   return (
     <group ref={deskRef} position={[0, -0.5, 0.4]}>
-      {/* ল্যাপটপ বেস / কী-বোর্ড বডি */}
       <Box args={[0.9, 0.02, 0.6]} position={[0, 0.01, 0]}>
         <meshStandardMaterial color="#cbd5e1" metalness={0.5} roughness={0.2} />
       </Box>
 
-      {/* কী-বোর্ডের ডার্ক ডেক প্যানেল (কী-ক্যাপ বসানোর বেস) */}
       <Box args={[0.68, 0.006, 0.38]} position={[0, 0.0135, 0.06]}>
         <meshStandardMaterial color="#0f172a" roughness={0.6} />
       </Box>
       <KeyboardKeys />
 
-      {/* ট্র্যাকপ্যাড */}
       <Box args={[0.22, 0.002, 0.13]} position={[0, 0.012, 0.19]}>
         <meshStandardMaterial
           color="#e2e8f0"
@@ -236,9 +227,7 @@ function WorkspaceModel() {
         />
       </Box>
 
-      {/* ল্যাপটপ স্ক্রিন (খোলা অবস্থায়) */}
       <group position={[0, 0.01, -0.29]} rotation={[-0.25, 0, 0]}>
-        {/* স্ক্রিনের পেছনের কভার */}
         <Box args={[0.9, 0.58, 0.02]} position={[0, 0.28, 0]}>
           <meshStandardMaterial
             color="#94a3b8"
@@ -246,13 +235,13 @@ function WorkspaceModel() {
             roughness={0.3}
           />
         </Box>
-        {/* ডিসপ্লে গ্লাস (বেজেল) */}
+
         <Box args={[0.84, 0.52, 0.01]} position={[0, 0.28, 0.01]}>
           <meshStandardMaterial color="#1e293b" roughness={0.1} />
         </Box>
-        {/* বাস্তব স্ক্রিন কনটেন্ট — MERN Stack */}
+
         <ScreenDisplay />
-        {/* স্ক্রিন থেকে বের হওয়া ফিউচারিস্টিক গ্লো */}
+
         <pointLight
           position={[0, 0.28, 0.2]}
           intensity={1.5}
@@ -261,12 +250,11 @@ function WorkspaceModel() {
         />
       </group>
 
-      {/* কফি মগ (ডানপাশে) */}
       <group position={[0.7, 0.1, 0.1]}>
         <Cylinder args={[0.07, 0.07, 0.18, 32]} position={[0, 0, 0]}>
           <meshStandardMaterial color="#1e1b4b" roughness={0.4} />
         </Cylinder>
-        {/* মগের হ্যান্ডেল */}
+
         <Torus
           args={[0.05, 0.015, 8, 16]}
           position={[0.07, 0, 0]}
@@ -276,13 +264,11 @@ function WorkspaceModel() {
         </Torus>
       </group>
 
-      {/* ডেস্ক ল্যাম্প (বামপাশে) */}
       <group position={[-0.7, 0.2, 0]}>
-        {/* ল্যাম্প স্ট্যান্ড */}
         <Cylinder args={[0.015, 0.015, 0.4, 16]} position={[0, 0, 0]}>
           <meshStandardMaterial color="#b45309" metalness={0.7} />
         </Cylinder>
-        {/* ল্যাম্প শেড / বাল্ব কভার */}
+
         <Sphere args={[0.08, 16, 16]} position={[0.05, 0.2, 0]}>
           <meshStandardMaterial
             color="#d97706"
@@ -290,7 +276,7 @@ function WorkspaceModel() {
             emissiveIntensity={0.3}
           />
         </Sphere>
-        {/* ল্যাম্পের ওয়ার্ম লাইট ইফেক্ট */}
+
         <pointLight
           position={[0.05, 0.1, 0]}
           intensity={1.2}
@@ -302,7 +288,6 @@ function WorkspaceModel() {
   );
 }
 
-// ২. টেকনোলজি নোড কম্পোনেন্ট (পেছনের আইকনগুলোর জন্য)
 function TechNode({ position, color, label, speed, offset, children }) {
   const nodeRef = useRef(null);
 
@@ -427,6 +412,39 @@ function LearningScene() {
       >
         <Icosahedron args={[0.08, 1]}>
           <meshStandardMaterial color="#f8fafc" roughness={0.5} />
+        </Icosahedron>
+      </TechNode>
+
+      <TechNode
+        position={[1.1, -0.9, -0.3]}
+        color="#4169E1"
+        label="PostgreSQL"
+        speed={0.65}
+        offset={5}
+      >
+        <Cylinder args={[0.09, 0.09, 0.16, 6]}>
+          <meshStandardMaterial
+            color="#336791"
+            emissive="#1e3a5f"
+            roughness={0.3}
+          />
+        </Cylinder>
+      </TechNode>
+
+      <TechNode
+        position={[-1.1, -0.9, -0.3]}
+        color="#ffffff"
+        label="Prisma"
+        speed={0.75}
+        offset={6}
+      >
+        <Icosahedron args={[0.09, 0]}>
+          <meshStandardMaterial
+            color="#0c344b"
+            emissive="#164e63"
+            flatShading
+            roughness={0.2}
+          />
         </Icosahedron>
       </TechNode>
     </group>

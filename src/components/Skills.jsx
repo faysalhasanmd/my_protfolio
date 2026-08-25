@@ -32,7 +32,6 @@ const groups = [
         dark: true,
       },
       { name: "TypeScript", iconNames: ["SiTypescript"], color: "#3178C6" },
-      { name: "Python", iconNames: ["SiPython"], color: "#3776AB" },
       { name: "C", iconNames: [], glyph: "C", color: "#A8B9CC" },
     ],
   },
@@ -51,6 +50,8 @@ const groups = [
       { name: "Node.js", iconNames: ["SiNodedotjs"], color: "#5FA04E" },
       { name: "Express", iconNames: ["SiExpress"], color: PALETTE.text },
       { name: "MongoDB", iconNames: ["SiMongodb"], color: "#47A248" },
+      { name: "PostgreSQL", iconNames: ["SiPostgresql"], color: "#4169E1" },
+      { name: "Prisma", iconNames: ["SiPrisma"], color: "#2D3748" },
     ],
   },
   {

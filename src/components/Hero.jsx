@@ -4,9 +4,8 @@ import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { profile } from "@/lib/data";
 
-// কাস্টম থ্রি ডট জেএস নেটওয়ার্ক সিনটি SSR ফলস রেখে ডাইনামিকালি লোড করা হলো
 const NetworkScene = dynamic(() => import("./NetworkScene"), { ssr: false });
-// MERN স্ট্যাক লেয়ার সিন — হিরো সেকশনের সিগনেচার এলিমেন্ট
+
 const StackScene = dynamic(() => import("./StackScene"), { ssr: false });
 
 // Hardcoded hex-er bodole CSS variable — globals.css-er .dark class
@@ -64,9 +63,7 @@ export default function Hero() {
       />
 
       <div className="w-full max-w-6xl mx-auto px-6 md:px-10 z-10 py-20 md:py-0">
-        {/* ২-কলাম গ্রিড লেআউট */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* বামদিকের টেক্সট কন্টেন্ট এরিয়া (Column 7) */}
           <motion.div
             variants={container}
             initial="hidden"
@@ -107,7 +104,7 @@ export default function Hero() {
                 style={{ backgroundColor: PALETTE.line }}
               />
               <span className="font-mono text-sm md:text-base opacity-70">
-                React · Next.js · Node.js · MongoDB
+                React · Next.js · Node.js · MongoDB · PostgreSQL · Prisma
               </span>
             </motion.div>
 
@@ -157,7 +154,6 @@ export default function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* ডানদিকের MERN Stack 3D সিন (Column 5) */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
