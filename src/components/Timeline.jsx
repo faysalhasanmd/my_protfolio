@@ -5,14 +5,8 @@ import { GraduationCap, Award } from "lucide-react";
 import dynamic from "next/dynamic";
 import { timeline } from "@/lib/data";
 
-// 3D Background Network Scene-টি SSR ফলস রেখে ডাইনামিকালি লোড করা হলো
 const NetworkScene = dynamic(() => import("./NetworkScene"), { ssr: false });
 
-/**
- * ---- Portfolio Palette Maintenance ----
- * Hardcoded hex-er bodole globals.css-er --hero-* CSS variable use kora hocche,
- * jate .dark class toggle hole automatic update hoy
- */
 const PALETTE = {
   bg: "var(--hero-bg)",
   text: "var(--hero-text)",
@@ -25,7 +19,6 @@ const PALETTE = {
 const withAlpha = (cssVar, percent) =>
   `color-mix(in srgb, ${cssVar} ${percent}%, transparent)`;
 
-// meta স্ট্রিং থেকে GPA/CGPA সংক্রান্ত অংশ বাদ দেয় (ডেটা ফাইল না ছুঁয়েই)
 function stripGpa(meta = "") {
   return meta
     .split("·")
@@ -35,7 +28,6 @@ function stripGpa(meta = "") {
 }
 
 export default function Timeline() {
-  // ডালাকে Education এবং Certification ক্যাটাগরিতে আলাদা করা হয়েছে
   const educationItems = timeline.filter((item) => item.type === "education");
   const certificateItems = timeline.filter((item) => item.type !== "education");
 

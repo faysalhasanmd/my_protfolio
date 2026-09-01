@@ -11,7 +11,6 @@ import {
 import { ExternalLink, X, Eye } from "lucide-react";
 import dynamic from "next/dynamic";
 
-// কাস্টম থ্রি ডট জেএস নেটওয়ার্ক সিনটি SSR ফলস রেখে ডাইনামিকালি লোড করা হলো
 const NetworkScene = dynamic(() => import("./NetworkScene"), { ssr: false });
 
 const projectData = [
@@ -22,7 +21,7 @@ const projectData = [
       "An advanced tuition management and analytics platform for tutors and students in Bangladesh.",
     longDescription:
       "EduPulse BD is a premium full-stack platform designed to bridge the gap between tutors and students. It features an interactive student-tutor application process, advanced analytical charts for tracking earnings (monthly & cumulative), and responsive admin management workflows built to handle tuition allocation elegantly.",
-    image: "/images/etuition.jpg",
+    image: "/images/tuitionHero.png",
     stack: ["React.js", "Chart.js", "Tailwind CSS", "Node.js", "MongoDB"],
     github: "https://github.com/faysalhasanmd/bdTution",
     live: "https://preeminent-mermaid-04ba7b.netlify.app/",
